@@ -1,33 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_provider_clean_mvvm/providers/auth_provider.dart';
+
 import 'package:provider/provider.dart';
 
-
-import '../../providers/app_provider.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final appProvider = context.watch<AppProvider>();
+    final authProvider = context.watch<AuthProvider>();
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Provider MVVM Demo'),
+        title: const Text('Home'),
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.logout),
+            onPressed: () {
+              authProvider.logout();
+            },
+          )
+        ],
       ),
       body: Center(
-        child: appProvider.isLoading
-            ? const CircularProgressIndicator()
-            : ElevatedButton(
-                onPressed: () {
-                  appProvider.setLoading(true);
-
-                  Future.delayed(const Duration(seconds: 2), () {
-                    appProvider.setLoading(false);
-                  });
-                },
-                child: const Text('Simulate Loading'),
-              ),
+        child: Text(
+          'Welcome ${authProvider.user?.name ?? ''}',
+          style: const TextStyle(fontSize: 18),
+        ),
       ),
     );
   }

@@ -7,4 +7,5 @@ class AppProvider extends ChangeNotifier {
     isLoading = value;
     notifyListeners();
   }
+ 
 }

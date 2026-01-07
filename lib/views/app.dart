@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../providers/auth_provider.dart';
+import 'home/home_screen.dart';
 import 'login/login_screen.dart';
 
 class MyApp extends StatelessWidget {
@@ -6,10 +10,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Provider Clean MVVM',
-      debugShowCheckedModeBanner: false,
-      home: const LoginScreen(),
+    return Consumer<AuthProvider>(
+      builder: (context, auth, _) {
+        return MaterialApp(
+          debugShowCheckedModeBanner: false,
+          home: auth.user == null
+              ? const LoginScreen()
+              : const HomeScreen(),
+        );
+      },
     );
   }
 }
