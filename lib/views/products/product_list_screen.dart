@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_provider_clean_mvvm/providers/auth_provider.dart';
 import 'package:provider/provider.dart';
 
 import '../../providers/product_provider.dart';
@@ -28,30 +29,36 @@ class _ProductListScreenState extends State<ProductListScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Products'),
-        actions: [
-          Stack(
-            alignment: Alignment.topRight,
-            children: [
-              IconButton(
-                icon: const Icon(Icons.shopping_cart),
-                onPressed: () {
-                  Navigator.pushNamed(context, '/cart');
-                },
-              ),
-              if (cartProvider.itemCount > 0)
-                CircleAvatar(
-                  radius: 10,
-                  backgroundColor: Colors.red,
-                  child: Text(
-                    cartProvider.itemCount.toString(),
-                    style: const TextStyle(fontSize: 12, color: Colors.white),
-                  ),
-                ),
-            ],
+  title: const Text('Products'),
+  actions: [
+    IconButton(
+      icon: const Icon(Icons.logout),
+      onPressed: () {
+        context.read<AuthProvider>().logout();
+      },
+    ),
+    Stack(
+      alignment: Alignment.topRight,
+      children: [
+        IconButton(
+          icon: const Icon(Icons.shopping_cart),
+          onPressed: () {
+            Navigator.pushNamed(context, '/cart');
+          },
+        ),
+        if (cartProvider.itemCount > 0)
+          CircleAvatar(
+            radius: 10,
+            backgroundColor: Colors.red,
+            child: Text(
+              cartProvider.itemCount.toString(),
+              style: const TextStyle(fontSize: 12, color: Colors.white),
+            ),
           ),
-        ],
-      ),
+      ],
+    ),
+  ],
+),
       body: productProvider.isLoading
           ? const Center(child: CircularProgressIndicator())
           : ListView.builder(

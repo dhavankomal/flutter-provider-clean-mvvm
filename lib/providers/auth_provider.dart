@@ -13,6 +13,20 @@ class AuthProvider extends ChangeNotifier {
   bool get isLoading => _isLoading;
   String? get errorMessage => _errorMessage;
   UserModel? get user => _user;
+  
+  bool _isInitialized = false;
+bool get isInitialized => _isInitialized;
+
+Future<void> initializeApp() async {
+  // Simulate loading saved session (token, user, etc.)
+  await Future.delayed(const Duration(seconds: 2));
+
+  // For now, user remains null (not logged in)
+  // Later this can be replaced with SharedPreferences / Firebase
+
+  _isInitialized = true;
+  notifyListeners();
+}
 
   Future<void> login(String email, String password) async {
     _isLoading = true;

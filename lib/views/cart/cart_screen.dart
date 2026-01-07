@@ -20,15 +20,34 @@ class CartScreen extends StatelessWidget {
                   child: ListView.builder(
                     itemCount: cartProvider.items.length,
                     itemBuilder: (context, index) {
-                      final item = cartProvider.items[index];
+                      final cartItem = cartProvider.items[index];
 
                       return ListTile(
-                        title: Text(item.name),
-                        trailing: IconButton(
-                          icon: const Icon(Icons.remove),
-                          onPressed: () {
-                            cartProvider.removeFromCart(item);
-                          },
+                        title: Text(cartItem.product.name),
+                        subtitle: Text(
+                          '₹ ${cartItem.product.price} x ${cartItem.quantity}',
+                        ),
+                        trailing: Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            IconButton(
+                              icon: const Icon(Icons.remove),
+                              onPressed: () {
+                                cartProvider.decreaseQuantity(
+                                  cartItem.product,
+                                );
+                              },
+                            ),
+                            Text(cartItem.quantity.toString()),
+                            IconButton(
+                              icon: const Icon(Icons.add),
+                              onPressed: () {
+                                cartProvider.addToCart(
+                                  cartItem.product,
+                                );
+                              },
+                            ),
+                          ],
                         ),
                       );
                     },
@@ -36,9 +55,21 @@ class CartScreen extends StatelessWidget {
                 ),
                 Padding(
                   padding: const EdgeInsets.all(16),
-                  child: Text(
-                    'Total: ₹ ${cartProvider.totalPrice}',
-                    style: const TextStyle(fontSize: 18),
+                  child: Column(
+                    children: [
+                      Text(
+                        'Total Items: ${cartProvider.itemCount}',
+                        style: const TextStyle(fontSize: 16),
+                      ),
+                      const SizedBox(height: 8),
+                      Text(
+                        'Total Price: ₹ ${cartProvider.totalPrice}',
+                        style: const TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ],
