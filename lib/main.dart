@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_provider_clean_mvvm/providers/auth_provider.dart';
+import 'package:flutter_provider_clean_mvvm/providers/cart_provider.dart';
+import 'package:flutter_provider_clean_mvvm/providers/product_provider.dart';
 
 import 'package:provider/provider.dart';
 
@@ -13,6 +15,8 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AppProvider()),
         ChangeNotifierProvider(create: (_) => AuthProvider()),
+        ChangeNotifierProvider(create: (_) => ProductProvider()),
+        ChangeNotifierProvider(create: (_) => CartProvider()),
       ],
       child: const MyApp(),
     ),
